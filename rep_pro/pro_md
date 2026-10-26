@@ -1,0 +1,30 @@
+도메인	핵심 컬럼	핵심 메서드
+Use = email, id, password_hash, role(고객/점주) | is_owner()
+Store = owner_id, name, category, address, close_time	| is_owned_by(user_id)
+Product = original_price, discount_price, stock, pickup_deadline, status	| reserve(), restore(), close()
+Reservation	= user_id, product_id, quantity, total_price, status, Reservation_cancle	| cancel(), complete_pickup(), mark_no_show()
+TokenBlacklist = jti, expires_at	| is_expired()
+
+1인당 수량 제한을 둘지
+예약 취소를 언제까지 받을지
+노쇼를 수동으로 처리할지 자동으로 처리할지
+한 예약에 여러 상품을 담을지
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+설계
+
+담당	        역할	                                           설계 단계에서 할 일
+A	        PM · 인증 (auth/)	                         메인 규칙 정의서 취합, 인증 API 명세
+B	        가게·상품 (store/)	                          Store·Product 테이블, 가게·상품 API 명세
+C	        예약 (reservation/), 도전 A	                  Reservation 테이블, 상태 전이도, 예약 API 명세
+D       	공통 인프라 (DB, main.py, 미들웨어)	            ERD 통합, 폴더 구조, Git 규칙, 에러 응답 규칙
+E	        웹 화면 · 문서	                               화면 목록, 와이어프레임
+
+설계 산출물 체크리스트 8개
+예약 상태 전이도: RESERVED에서 CANCELLED, PICKED_UP, NO_SHOW로 바뀝니다.
+API 명세서 초안 19개: 엔드포인트마다 Method, URI, 권한, 성공·에러 코드를 적었습니다.
+공통 에러 규칙: 400(규칙 위반), 401(토큰), 403(권한), 404(없는 ID), 422(입력 형식)
+웹 화면 3개: 메인 할인 목록, 가게 상세, 현황 대시보드
+Git 규칙: 브랜치 전략, PR 리뷰, 커밋 컨벤션
+
+
+ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
